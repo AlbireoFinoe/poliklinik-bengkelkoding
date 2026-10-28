@@ -14,21 +14,6 @@
         </div>
     </div>
 
-    {{-- ================= NOTIFIKASI ================= --}}
-    @if(session('success'))
-        <div class="alert alert-success mb-5 rounded-xl text-white">
-            <i class="fas fa-circle-check"></i>
-            <span>{{ session('success') }}</span>
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-error mb-5 rounded-xl text-white">
-            <i class="fas fa-circle-exclamation"></i>
-            <span>{{ session('error') }}</span>
-        </div>
-    @endif
-
     {{-- ================= CARD TABLE ================= --}}
     <div class="card bg-base-100 shadow-md rounded-2xl border border-slate-200">
         <div class="card-body p-0">
