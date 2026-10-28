@@ -66,34 +66,77 @@
 
                                 {{-- AKSI --}}
                                 <td class="px-6 py-4 text-right">
+   
+                                @if($pasien->periksas->isNotEmpty())
 
-                                    @if($pasien->periksas->isNotEmpty())
+                                    {{-- PASIEN SUDAH DIPERIKSA --}}
+                                    <span class="inline-flex items-center gap-2 px-3 py-2
+                                                rounded-lg bg-green-100 text-green-700
+                                                text-xs font-semibold">
 
-                                        {{-- SUDAH DIPERIKSA --}}
-                                        <span class="inline-flex items-center gap-2
-                                                     px-3 py-2 rounded-lg
-                                                     bg-green-100 text-green-700
-                                                     text-xs font-semibold">
+                                        <i class="fas fa-circle-check"></i>
+                                        Sudah Diperiksa
 
-                                            <i class="fas fa-circle-check"></i>
-                                            Sudah Diperiksa
-                                        </span>
+                                    </span>
 
-                                    @else
+                                @else
 
-                                        {{-- TOMBOL PERIKSA --}}
+                                    <div class="flex flex-wrap items-center justify-end gap-2">
+
+                                        {{-- NOMOR YANG SEDANG DIPANGGIL --}}
+                                        @if(
+                                            !is_null($pasien->jadwalPeriksa?->no_antrian_dilayani)
+                                            &&
+                                            (int) $pasien->jadwalPeriksa->no_antrian_dilayani
+                                                === (int) $pasien->no_antrian
+                                        )
+
+                                            <span class="badge badge-success text-white
+                                                        font-semibold">
+                                                Sedang Dipanggil
+                                            </span>
+
+                                        @endif
+
+                                        {{-- TOMBOL PANGGIL --}}
+                                        <form method="POST"
+                                            action="{{ route('periksa-pasien.panggil', $pasien->id) }}">
+
+                                            @csrf
+
+                                            <button type="submit"
+                                                    @disabled(!$pasien->jadwalPeriksa?->status)
+                                                    class="inline-flex items-center gap-2
+                                                        px-4 py-2 rounded-lg
+                                                        bg-indigo-600 hover:bg-indigo-700
+                                                        text-white text-xs font-semibold
+                                                        transition disabled:opacity-50
+                                                        disabled:cursor-not-allowed">
+
+                                                <i class="fas fa-bullhorn"></i>
+                                                Panggil
+
+                                            </button>
+
+                                        </form>
+
+                                        {{-- TOMBOL PERIKSA YANG SUDAH ADA --}}
                                         <a href="{{ route('periksa-pasien.create', $pasien->id) }}"
-                                           class="inline-flex items-center gap-2
-                                                  px-4 py-2 rounded-lg
-                                                  bg-amber-500 hover:bg-amber-600
-                                                  text-white text-xs font-semibold
-                                                  transition">
+                                        class="inline-flex items-center gap-2
+                                                px-4 py-2 rounded-lg
+                                                bg-amber-500 hover:bg-amber-600
+                                                text-white text-xs font-semibold
+                                                transition">
 
                                             <i class="fas fa-stethoscope"></i>
                                             Periksa
+
                                         </a>
 
-                                    @endif
+                                    </div>
+
+                                @endif
+
 
                                 </td>
 

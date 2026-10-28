@@ -5,6 +5,18 @@
         <h2 class="text-2xl font-bold text-slate-800">
             Riwayat Pasien
         </h2>
+
+
+        <a href="{{ route('export.dokter.riwayat') }}" class="inline-flex items-center justify-center
+          gap-2 px-5 py-2.5 bg-emerald-600
+          hover:bg-emerald-700 text-white
+          rounded-xl text-sm font-semibold transition">
+
+            <i class="fas fa-file-excel"></i>
+            Export Excel
+
+        </a>
+
     </div>
 
     {{-- Card --}}
@@ -29,46 +41,46 @@
                     {{-- Body --}}
                     <tbody>
                         @forelse($riwayatPasien as $riwayat)
-                        <tr class="hover:bg-slate-50 transition">
+                            <tr class="hover:bg-slate-50 transition">
 
-                            <td class="px-6 py-4 text-slate-500">
-                                {{ $riwayat->daftarPoli->no_antrian }}
-                            </td>
+                                <td class="px-6 py-4 text-slate-500">
+                                    {{ $riwayat->daftarPoli->no_antrian }}
+                                </td>
 
-                            <td class="px-6 py-4 font-semibold text-slate-800">
-                                {{ $riwayat->daftarPoli->pasien->nama }}
-                            </td>
+                                <td class="px-6 py-4 font-semibold text-slate-800">
+                                    {{ $riwayat->daftarPoli->pasien->nama }}
+                                </td>
 
-                            <td class="px-6 py-4 text-slate-500">
-                                {{ $riwayat->daftarPoli->keluhan }}
-                            </td>
+                                <td class="px-6 py-4 text-slate-500">
+                                    {{ $riwayat->daftarPoli->keluhan }}
+                                </td>
 
-                            <td class="px-6 py-4 text-slate-500">
-                                {{ \Carbon\Carbon::parse($riwayat->tgl_periksa)->format('d/m/Y') }}
-                            </td>
+                                <td class="px-6 py-4 text-slate-500">
+                                    {{ \Carbon\Carbon::parse($riwayat->tgl_periksa)->format('d/m/Y') }}
+                                </td>
 
-                            <td class="px-6 py-4 text-slate-500">
-                                Rp {{ number_format($riwayat->biaya_periksa, 0, ',', '.') }}
-                            </td>
+                                <td class="px-6 py-4 text-slate-500">
+                                    Rp {{ number_format($riwayat->biaya_periksa, 0, ',', '.') }}
+                                </td>
 
-                            <td class="px-6 py-4 text-right">
-                                <a href="{{ route('riwayat-pasien.show', $riwayat) }}"
-                                    class="btn btn-sm bg-blue-500 hover:bg-blue-600 text-white border-none rounded-lg px-4">
-                                    <i class="fas fa-eye"></i>
-                                    Detail
-                                </a>
-                            </td>
+                                <td class="px-6 py-4 text-right">
+                                    <a href="{{ route('riwayat-pasien.show', $riwayat) }}"
+                                        class="btn btn-sm bg-blue-500 hover:bg-blue-600 text-white border-none rounded-lg px-4">
+                                        <i class="fas fa-eye"></i>
+                                        Detail
+                                    </a>
+                                </td>
 
-                        </tr>
+                            </tr>
                         @empty
-                        <tr>
-                            <td colspan="6" class="text-center py-14 text-slate-400">
-                                <div class="flex flex-col items-center justify-center gap-2">
-                                    <i class="fas fa-inbox text-3xl"></i>
-                                    <span>Belum ada riwayat pemeriksaan</span>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="6" class="text-center py-14 text-slate-400">
+                                    <div class="flex flex-col items-center justify-center gap-2">
+                                        <i class="fas fa-inbox text-3xl"></i>
+                                        <span>Belum ada riwayat pemeriksaan</span>
+                                    </div>
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
 

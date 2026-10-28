@@ -11,11 +11,23 @@ class Obat extends Model
     protected $fillable = [
         'nama_obat',
         'kemasan',
+        'stok',
         'harga',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'stok' => 'integer',
+            'harga' => 'integer',
+        ];
+    }
+
     public function detailPeriksas()
     {
-        return $this->hasMany(DetailPeriksa::class, 'id_obat');
+        return $this->hasMany(
+            DetailPeriksa::class,
+            'id_obat'
+        );
     }
 }

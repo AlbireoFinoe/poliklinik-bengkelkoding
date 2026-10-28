@@ -1,10 +1,8 @@
-
 <x-layouts.app title="Edit Obat">
 
     {{-- Header --}}
     <div class="flex items-center gap-3 mb-6">
-        <a href="{{ route('obat.index') }}"
-           class="flex items-center justify-center w-9 h-9 rounded-lg
+        <a href="{{ route('obat.index') }}" class="flex items-center justify-center w-9 h-9 rounded-lg
                   bg-slate-100 hover:bg-slate-200
                   text-slate-600 transition">
             <i class="fas fa-arrow-left text-sm"></i>
@@ -19,8 +17,7 @@
     <div class="card bg-base-100 shadow-md rounded-2xl border border-slate-200">
         <div class="card-body p-8">
 
-            <form action="{{ route('obat.update', $obat->id) }}"
-                  method="POST" novalidate>
+            <form action="{{ route('obat.update', $obat->id) }}" method="POST" novalidate>
                 @csrf
                 @method('PUT')
 
@@ -28,17 +25,12 @@
 
                     {{-- Nama Obat --}}
                     <div>
-                        <label for="nama_obat"
-                               class="block text-sm font-semibold text-slate-700 mb-2">
+                        <label for="nama_obat" class="block text-sm font-semibold text-slate-700 mb-2">
                             Nama Obat <span class="text-red-500">*</span>
                         </label>
 
-                        <input type="text"
-                               id="nama_obat"
-                               name="nama_obat"
-                               value="{{ old('nama_obat', $obat->nama_obat) }}"
-                               placeholder="Masukkan nama obat..."
-                               class="w-full px-4 py-2 rounded-lg border-2
+                        <input type="text" id="nama_obat" name="nama_obat"
+                            value="{{ old('nama_obat', $obat->nama_obat) }}" placeholder="Masukkan nama obat..." class="w-full px-4 py-2 rounded-lg border-2
                                       focus:border-primary focus:outline-none
                                       @error('nama_obat') border-red-500 @enderror">
 
@@ -51,17 +43,12 @@
 
                     {{-- Kemasan --}}
                     <div>
-                        <label for="kemasan"
-                               class="block text-sm font-semibold text-slate-700 mb-2">
+                        <label for="kemasan" class="block text-sm font-semibold text-slate-700 mb-2">
                             Kemasan <span class="text-red-500">*</span>
                         </label>
 
-                        <input type="text"
-                               id="kemasan"
-                               name="kemasan"
-                               value="{{ old('kemasan', $obat->kemasan) }}"
-                               placeholder="Masukkan kemasan obat..."
-                               class="w-full px-4 py-2 rounded-lg border-2
+                        <input type="text" id="kemasan" name="kemasan" value="{{ old('kemasan', $obat->kemasan) }}"
+                            placeholder="Masukkan kemasan obat..." class="w-full px-4 py-2 rounded-lg border-2
                                       focus:border-primary focus:outline-none
                                       @error('kemasan') border-red-500 @enderror">
 
@@ -74,10 +61,29 @@
 
                 </div>
 
+
+                {{-- Stok Obat --}}
+                <div class="mb-6">
+                    <label for="stok" class="block text-sm font-semibold text-slate-700 mb-2">
+                        Stok Obat <span class="text-red-500">*</span>
+                    </label>
+
+                    <input type="number" id="stok" name="stok" value="{{ old('stok', $obat->stok) }}" min="0" step="1"
+                        required class="w-full px-4 py-2 rounded-lg border-2
+                  focus:border-primary focus:outline-none
+                  @error('stok') border-red-500 @enderror">
+
+                    @error('stok')
+                        <p class="text-xs text-red-500 mt-1">
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+
+
                 {{-- Harga --}}
                 <div class="mb-8">
-                    <label for="harga"
-                           class="block text-sm font-semibold text-slate-700 mb-2">
+                    <label for="harga" class="block text-sm font-semibold text-slate-700 mb-2">
                         Harga Obat (Rp) <span class="text-red-500">*</span>
                     </label>
 
@@ -87,13 +93,8 @@
                             Rp
                         </span>
 
-                        <input type="number"
-                               id="harga"
-                               name="harga"
-                               value="{{ old('harga', $obat->harga) }}"
-                               min="0"
-                               step="0.01"
-                               class="w-full pl-12 pr-4 py-2 rounded-lg border-2
+                        <input type="number" id="harga" name="harga" value="{{ old('harga', $obat->harga) }}" min="0"
+                            step="0.01" class="w-full pl-12 pr-4 py-2 rounded-lg border-2
                                       focus:border-primary focus:outline-none
                                       @error('harga') border-red-500 @enderror">
                     </div>
@@ -107,8 +108,7 @@
 
                 {{-- Buttons --}}
                 <div class="flex items-center gap-3">
-                    <button type="submit"
-                            class="inline-flex items-center gap-2 px-6 py-2.5
+                    <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5
                                    bg-primary hover:bg-primary/90
                                    text-white rounded-lg font-semibold
                                    text-sm transition">
@@ -116,8 +116,7 @@
                         Update
                     </button>
 
-                    <a href="{{ route('obat.index') }}"
-                       class="inline-flex items-center gap-2 px-6 py-2.5
+                    <a href="{{ route('obat.index') }}" class="inline-flex items-center gap-2 px-6 py-2.5
                               bg-slate-100 hover:bg-slate-200
                               text-slate-600 rounded-xl font-semibold
                               text-sm transition">

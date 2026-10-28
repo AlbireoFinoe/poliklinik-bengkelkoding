@@ -6,6 +6,18 @@
             Data Dokter
         </h2>
 
+
+        <a href="{{ route('export.admin.dokter') }}" class="inline-flex items-center justify-center
+          gap-2 px-5 py-2.5 bg-emerald-600
+          hover:bg-emerald-700 text-white
+          rounded-xl text-sm font-semibold transition ml-auto">
+
+            <i class="fas fa-file-excel"></i>
+            Export Excel
+
+        </a>
+
+
         <a href="{{ route('dokter.create') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary/90 
                   text-white rounded-xl text-sm font-semibold transition">
             <i class="fas fa-plus text-sm"></i>
@@ -37,70 +49,70 @@
                     <tbody class="text-sm text-slate-700">
 
                         @forelse($dokters as $dokter)
-                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
 
-                            <td class="px-6 py-4 font-semibold text-slate-800">
-                                {{ $dokter->nama }}
-                            </td>
+                                <td class="px-6 py-4 font-semibold text-slate-800">
+                                    {{ $dokter->nama }}
+                                </td>
 
-                            <td class="px-6 py-4">
-                                {{ $dokter->email }}
-                            </td>
+                                <td class="px-6 py-4">
+                                    {{ $dokter->email }}
+                                </td>
 
-                            <td class="px-6 py-4">
-                                {{ $dokter->no_ktp ?? '-' }}
-                            </td>
+                                <td class="px-6 py-4">
+                                    {{ $dokter->no_ktp ?? '-' }}
+                                </td>
 
-                            <td class="px-6 py-4">
-                                {{ $dokter->no_hp ?? '-' }}
-                            </td>
+                                <td class="px-6 py-4">
+                                    {{ $dokter->no_hp ?? '-' }}
+                                </td>
 
-                            <td class="px-6 py-4">
-                                {{ $dokter->alamat ?? '-' }}
-                            </td>
+                                <td class="px-6 py-4">
+                                    {{ $dokter->alamat ?? '-' }}
+                                </td>
 
-                            <td class="px-6 py-4">
-                                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
-                                    {{ $dokter->poli->nama_poli ?? 'Belum Dipilih' }}
-                                </span>
-                            </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
+                                        {{ $dokter->poli->nama_poli ?? 'Belum Dipilih' }}
+                                    </span>
+                                </td>
 
-                            <td class="px-6 py-4 text-right">
-                                <div class="inline-flex items-center gap-2">
+                                <td class="px-6 py-4 text-right">
+                                    <div class="inline-flex items-center gap-2">
 
-                                    {{-- Edit --}}
-                                    <a href="{{ route('dokter.edit', $dokter->id) }}" class="inline-flex items-center gap-1 px-3 py-2 
-                                        bg-amber-500 hover:bg-amber-600 
-                                        text-white rounded-lg text-xs font-semibold transition">
-                                        <i class="fas fa-pen-to-square text-xs"></i>
-                                        Edit
-                                    </a>
+                                        {{-- Edit --}}
+                                        <a href="{{ route('dokter.edit', $dokter->id) }}" class="inline-flex items-center gap-1 px-3 py-2 
+                                            bg-amber-500 hover:bg-amber-600 
+                                            text-white rounded-lg text-xs font-semibold transition">
+                                            <i class="fas fa-pen-to-square text-xs"></i>
+                                            Edit
+                                        </a>
 
-                                    {{-- Delete --}}
-                                    <form action="{{ route('dokter.destroy', $dokter->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
+                                        {{-- Delete --}}
+                                        <form action="{{ route('dokter.destroy', $dokter->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
 
-                                        <button type="submit"
-                                            onclick="return confirm('Yakin ingin menghapus dokter ini?')" class="inline-flex items-center gap-1 px-3 py-2 
-                                             bg-red-500 hover:bg-red-600 
-                                             text-white rounded-lg text-xs font-semibold transition">
-                                            <i class="fas fa-trash text-xs"></i>
-                                            Hapus
-                                        </button>
-                                    </form>
+                                            <button type="submit"
+                                                onclick="return confirm('Yakin ingin menghapus dokter ini?')" class="inline-flex items-center gap-1 px-3 py-2 
+                                                 bg-red-500 hover:bg-red-600 
+                                                 text-white rounded-lg text-xs font-semibold transition">
+                                                <i class="fas fa-trash text-xs"></i>
+                                                Hapus
+                                            </button>
+                                        </form>
 
-                                </div>
-                            </td>
+                                    </div>
+                                </td>
 
-                        </tr>
+                            </tr>
                         @empty
-                        <tr>
-                            <td colspan="7" class="text-center py-16 text-slate-400">
-                                <i class="fas fa-inbox text-3xl mb-3 block"></i>
-                                Belum ada data dokter
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="7" class="text-center py-16 text-slate-400">
+                                    <i class="fas fa-inbox text-3xl mb-3 block"></i>
+                                    Belum ada data dokter
+                                </td>
+                            </tr>
                         @endforelse
 
                     </tbody>

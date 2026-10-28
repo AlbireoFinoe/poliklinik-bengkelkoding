@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use App\Events\AntrianDipanggil;
+use App\Models\JadwalPeriksa;
 use Illuminate\View\View;
 
 class PeriksaPasienController extends Controller
@@ -147,7 +149,7 @@ class PeriksaPasienController extends Controller
         }
 
         // Semua penyimpanan dilakukan dalam transaksi
-        DB::transaction(function () use ($data, $obatIds) {
+        $jadwalYangSelesai = DB::transaction(function () use ($data, $obatIds) {
 
             // Pastikan pendaftaran milik dokter login
             $pendaftaran = DaftarPoli::whereHas(
@@ -205,7 +207,32 @@ class PeriksaPasienController extends Controller
                     'id_obat' => $idObat,
                 ]);
             }
+
+
+            // Jika pasien yang diperiksa adalah antrean
+            // yang sedang dilayani, kosongkan nomor tersebut.
+            $direset = JadwalPeriksa::query()
+                ->whereKey($pendaftaran->id_jadwal)
+                ->where(
+                    'no_antrian_dilayani',
+                    $pendaftaran->no_antrian
+                )
+                ->update([
+                    'no_antrian_dilayani' => null,
+                ]);
+
+            return $direset > 0
+                ? (int) $pendaftaran->id_jadwal
+                : null;
+
         });
+
+        if ($jadwalYangSelesai !== null) {
+            event(new AntrianDipanggil(
+                $jadwalYangSelesai,
+                null
+            ));
+        }
 
         return redirect()
             ->route('periksa-pasien.index')

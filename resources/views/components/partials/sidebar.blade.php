@@ -10,17 +10,17 @@
                     Poliklinik
                 </div>
 
-                @if(request()->is('admin*'))
+                @if(auth()->user()?->role === 'admin')
                     <span
                         class="text-[10px] font-bold uppercase tracking-wider bg-indigo-400/20 text-indigo-300 border border-indigo-400/30 px-2 py-0.5 rounded-md">
                         Admin
                     </span>
-                @elseif(request()->is('dokter*'))
+                @elseif(auth()->user()?->role === 'dokter')
                     <span
                         class="text-[10px] font-bold uppercase tracking-wider bg-purple-400/20 text-purple-300 border border-purple-400/30 px-2 py-0.5 rounded-md">
                         Dokter
                     </span>
-                @elseif(request()->is('pasien*'))
+                @elseif(auth()->user()?->role === 'pasien')
                     <span
                         class="text-[10px] font-bold uppercase tracking-wider bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded-md">
                         Pasien
@@ -82,6 +82,17 @@
                 </a>
 
 
+                {{-- Menu Verifikasi Pembayaran Admin --}}
+                <a href="{{ route('admin.pembayaran.index') }}"
+                    class="{{ $baseLink }} {{ request()->routeIs('admin.pembayaran.*') ? $active : $inactive }}">
+
+                    <i class="fas fa-file-invoice-dollar w-4 text-center"></i>
+                    Verifikasi Pembayaran
+
+                </a>
+
+
+
             </div>
         @endif
 
@@ -109,13 +120,36 @@
                 </a>
 
 
+                {{-- Riwayat Pendaftaran Poli --}}
+                <a href="{{ route('pasien.riwayat.index') }}"
+                    class="{{ $baseLink }} {{ request()->routeIs('pasien.riwayat.*') ? $active : $inactive }}">
+
+                    <i class="fas fa-clock-rotate-left w-4 text-center"></i>
+
+                    Riwayat Pendaftaran
+
+                </a>
+
+
+                {{-- Menu Pembayaran Pasien --}}
+                <a href="{{ route('pasien.pembayaran.index') }}"
+                    class="{{ $baseLink }} {{ request()->routeIs('pasien.pembayaran.*') ? $active : $inactive }}">
+
+                    <i class="fas fa-money-bill-wave w-4 text-center"></i>
+                    Pembayaran
+
+                </a>
+
+
+
+
 
             </div>
         @endif
 
 
         {{-- ================= DOKTER ================= --}}
-        @if(request()->is('dokter*'))
+        @if(auth()->user()?->role === 'dokter')
 
             <p class="text-xs uppercase tracking-widest text-indigo-400 px-3 mb-3 mt-6">
                 Menu Dokter
@@ -150,6 +184,30 @@
 
             </div>
         @endif
+
+
+        {{-- ================= PROFILE ================= --}}
+        <div class="mt-6 border-t border-white/10 pt-4">
+
+            <p class="text-xs font-bold uppercase
+              tracking-widest text-indigo-400
+              px-3 mb-3">
+
+                Pengaturan Akun
+
+            </p>
+
+            <a href="{{ route('profil.index') }}"
+                class="{{ $baseLink }} {{ request()->routeIs('profil.*') ? $active : $inactive }}">
+
+                <i class="fas fa-user-gear w-4 text-center"></i>
+
+                Profil & Ganti Password
+
+            </a>
+
+        </div>
+
 
     </div>
 
